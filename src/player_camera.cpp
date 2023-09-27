@@ -73,15 +73,14 @@ double PlayerCamera::get_follow_fac() const
 
 void PlayerCamera::_bind_methods()
 {
+    StringName &class_name = PlayerCamera::get_class_static();
+
     ClassDB::bind_method(D_METHOD("get_subject"), &PlayerCamera::get_subject);
     ClassDB::bind_method(D_METHOD("set_subject", "p_subject"), &PlayerCamera::set_subject);
 
     ClassDB::bind_method(D_METHOD("get_follow_fac"), &PlayerCamera::get_follow_fac);
     ClassDB::bind_method(D_METHOD("set_follow_fac", "p_follow_Fac"), &PlayerCamera::set_follow_fac);
 
-    ClassDB::add_property(
-        "PlayerCamera", PropertyInfo(Variant::Type::NODE_PATH, "subject"), "set_subject", "get_subject");
-
-    ClassDB::add_property(
-        "PlayerCamera", PropertyInfo(Variant::Type::FLOAT, "follow_fac"), "set_follow_fac", "get_follow_fac");
+    ClassDB::add_property(class_name, PropertyInfo(Variant::Type::NODE_PATH, "subject"), "set_subject", "get_subject");
+    ClassDB::add_property(class_name, PropertyInfo(Variant::Type::FLOAT, "follow_fac"), "set_follow_fac", "get_follow_fac");
 }

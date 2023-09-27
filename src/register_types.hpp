@@ -8,6 +8,8 @@
 
 #include "player_controller.hpp"
 #include "player_camera.hpp"
+#include "game_state.hpp"
+#include "collectable.hpp"
 
 void initialise_module();
 void terminate_module();

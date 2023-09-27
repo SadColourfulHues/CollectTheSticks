@@ -10,10 +10,10 @@ config_version=5
 
 [application]
 
-config/name="SticksGodot"
+config/name="Collect the Sticks"
 run/main_scene="res://Scenes/SCN_Main.tscn"
 config/features=PackedStringArray("4.1", "Mobile")
-config/icon="res://Assets/icon.svg"
+config/icon="res://Assets/Icons/icon.svg"
 
 [dotnet]
 
@@ -45,3 +45,4 @@ down={
 [rendering]
 
 renderer/rendering_method="mobile"
+environment/defaults/default_clear_color=Color(0.372549, 0.443137, 0.196078, 1)

@@ -9,6 +9,8 @@ void initialise_module(ModuleInitializationLevel p_level)
 
     ClassDB::register_class<PlayerController>();
     ClassDB::register_class<PlayerCamera>();
+    ClassDB::register_class<Collectable>();
+    ClassDB::register_class<GameState>();
 }
 
 void terminate_module(ModuleInitializationLevel p_level)
