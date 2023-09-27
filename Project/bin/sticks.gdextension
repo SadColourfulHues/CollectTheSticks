@@ -1,0 +1,6 @@
+[configuration]
+entry_symbol = "init"
+compatibility_minimum = 4.1
+
+[libraries]
+linux.debug.x86_64 = "res://bin/sticks_linux.debug_x86_64.so"
