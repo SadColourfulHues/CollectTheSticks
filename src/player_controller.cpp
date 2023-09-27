@@ -16,11 +16,28 @@ PlayerController::~PlayerController()
 
 void PlayerController::_ready()
 {
+    if (Engine::get_singleton()->is_editor_hint())
+    {
+        set_process(false);
+        set_process_internal(false);
+        set_physics_process(false);
+        set_physics_process_internal(false);
+
+        return;
+    }
+
+    p_sprite = static_cast<AnimatedSprite2D *>(get_node_or_null("%Sprite"));
     p_detector = static_cast<Area2D *>(get_node_or_null("%Detector"));
+
+    if (p_sprite == nullptr)
+    {
+        ERR_PRINT("PlayerController: player must have scene-unique AnimatedSprite2D child named 'Sprite'.");
+        return;
+    }
 
     if (p_detector == nullptr)
     {
-        WARN_PRINT("PlayerController: player must have a scene-unique Area2D child named 'Detector'.");
+        ERR_PRINT("PlayerController: player must have a scene-unique Area2D child named 'Detector'.");
         return;
     }
 
@@ -28,12 +45,8 @@ void PlayerController::_ready()
     p_detector->connect("body_entered", Callable(this, "area_body_entered"));
 }
 
-void PlayerController::_process(double delta)
+void PlayerController::_process(double)
 {
-    // Without this, the node will spam InputMap warnings in the debug console
-    // https://github.com/godotengine/godot/issues/74993#issuecomment-1582078412
-    NO_EDITOR
-
     Input *input = Input::get_singleton();
 
     Vector2 input_vec = input->get_vector("left", "right", "up", "down");
@@ -41,27 +54,22 @@ void PlayerController::_process(double delta)
 
     if (input_vec.length_squared() >= 0.1)
     {
-        play("walk");
+        p_sprite->play("walk");
         next_motion = input_vec;
     }
     else
     {
-        play("idle");
+        p_sprite->play("idle");
     }
 
     m_smooth_motion = m_smooth_motion.lerp(next_motion, 0.1);
-    set_flip_h(m_smooth_motion.x < 0.0);
+    p_sprite->set_flip_h(m_smooth_motion.x < 0.0);
 }
 
-void PlayerController::_physics_process(double delta)
+void PlayerController::_physics_process(double)
 {
-    Vector2 position = get_position();
-    position += m_smooth_motion * (m_speed * delta);
-
-    position.x = CLAMP(position.x, -WORLD_WIDTH, WORLD_WIDTH);
-    position.y = CLAMP(position.y, -WORLD_HEIGHT, WORLD_HEIGHT);
-
-    set_position(position);
+    set_velocity(m_smooth_motion * m_speed);
+    move_and_slide();
 }
 
 void PlayerController::on_detector_entered(Node2D *other)

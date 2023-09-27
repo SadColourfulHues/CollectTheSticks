@@ -2,6 +2,7 @@
 
 using namespace godot;
 
+
 Collectable::Collectable()
 {
     m_score_value = 1;
