@@ -22,6 +22,8 @@ void Collectable::collect()
     }
 
     p_game_state->add_score(m_score_value);
+    emit_signal("on_collected");
+
     queue_free();
 }
 
@@ -57,4 +59,6 @@ void Collectable::_bind_methods()
 
     ClassDB::add_property(class_name, PropertyInfo(Variant::Type::OBJECT, "game_state", PROPERTY_HINT_RESOURCE_TYPE, GameState::get_class_static()), "set_game_state", "get_game_state");
     ClassDB::add_property(class_name, PropertyInfo(Variant::Type::INT, "score_value"), "set_score_value", "get_score_value");
+
+    ClassDB::add_signal(class_name, MethodInfo(SIGNAL_ON_COLLECTED));
 }

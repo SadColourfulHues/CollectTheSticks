@@ -6,6 +6,7 @@
 #include "game_state.hpp"
 
 #define TAG_COLLECTABLE "collectables"
+#define SIGNAL_ON_COLLECTED "on_collected"
 
 namespace godot
 {
@@ -16,6 +17,8 @@ namespace godot
     public:
         Collectable();
         ~Collectable();
+
+        virtual void _ready() {}
 
         void collect();
 

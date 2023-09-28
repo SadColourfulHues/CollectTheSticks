@@ -13,6 +13,7 @@ void initialise_module(ModuleInitializationLevel p_level)
     ClassDB::register_class<Collectable>();
     ClassDB::register_class<GameState>();
     ClassDB::register_class<TreeController>();
+    ClassDB::register_class<Stick>();
 }
 
 void terminate_module(ModuleInitializationLevel p_level)

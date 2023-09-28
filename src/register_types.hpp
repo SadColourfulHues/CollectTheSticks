@@ -12,6 +12,8 @@
 #include "collectable.hpp"
 #include "tree_controller.hpp"
 
+#include "stick.hpp"
+
 void initialise_module();
 void terminate_module();
 

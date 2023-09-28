@@ -1,9 +1,15 @@
 #include "tree_controller.hpp"
+#include "collectable.hpp"
 
 using namespace godot;
 
 TreeController::TreeController()
 {
+    p_data.reserve(MAX_SPAWNS);
+
+    m_spawn_ticks = 0;
+    m_spawn_counter = 0;
+
     m_random_seed = 0;
     m_y_offset = -24;
 
@@ -20,8 +26,33 @@ TreeController::~TreeController()
 
 void TreeController::_ready()
 {
+    if (Engine::get_singleton()->is_editor_hint())
+    {
+        set_process(false);
+    }
+
     call_deferred("__configure_visuals");
     call_deferred("__configure_physics");
+}
+
+void TreeController::_process(double delta)
+{
+    m_spawn_ticks += delta;
+
+    if (m_spawn_ticks <= 5.0)
+        return;
+
+    m_spawn_ticks = 0.0;
+
+    uint16_t count = p_data.size();
+
+    for (int i = 0; i < MAX_SPAWN_ATTEMPTS; ++i)
+    {
+        if (p_random.randf() <= MAX_SPAWN_FAIL_CHANCE)
+            continue;
+
+        spawn_stick(p_data[p_random.randi() % count].position);
+    }
 }
 
 void TreeController::clear()
@@ -57,7 +88,7 @@ void TreeController::configure()
     Rect2 src_rect(0, 0, SPRITE_WIDTH, SPRITE_HEIGHT);
     Rect2 dst_rect(0, m_y_offset, SPRITE_WIDTH, SPRITE_HEIGHT);
 
-    RID parent_rid = this->get_canvas_item();
+    RID parent_rid = get_canvas_item();
     RID texture_rid = p_spritesheet->get_rid();
     RID material_rid;
 
@@ -70,13 +101,11 @@ void TreeController::configure()
     for (int i = 0, l = p_positions.size(); i < l; ++i)
     {
         Transform2D transform = TreeController::transform_for_position(p_positions[i]);
-        TreeData data;
 
         uint8_t index = p_random.randi() % 5;
         src_rect.set_position(Vector2(SPRITE_WIDTH * index, 0));
 
-        data.position = p_positions[i];
-        data.visual_rid = render_server->canvas_item_create();
+        TreeData data = p_data.emplace_back(render_server->canvas_item_create(), p_positions[i]);
 
         render_server->canvas_item_set_parent(data.visual_rid, parent_rid);
         render_server->canvas_item_set_transform(data.visual_rid, transform);
@@ -86,8 +115,6 @@ void TreeController::configure()
             RenderingServer::CanvasItemTextureFilter::CANVAS_ITEM_TEXTURE_FILTER_NEAREST);
 
         render_server->canvas_item_add_texture_rect_region(data.visual_rid, dst_rect, texture_rid, src_rect);
-
-        p_data.push_back(data);
     }
 }
 
@@ -128,6 +155,34 @@ void TreeController::configure_physics()
         physics_server->body_set_mode(p_data[i].body_rid, PhysicsServer2D::BodyMode::BODY_MODE_STATIC);
         physics_server->body_set_state(p_data[i].body_rid, PhysicsServer2D::BodyState::BODY_STATE_TRANSFORM, transform);
     }
+}
+
+void TreeController::spawn_stick(const Vector2 &position)
+{
+    if (m_spawn_counter >= MAX_SPAWNS)
+        return;
+
+    if (p_stick_template.is_null())
+    {
+        ERR_PRINT("TreeController: no stick <template> were provided.");
+        return;
+    }
+
+    Vector2 true_position = get_global_position();
+
+    true_position.x += WORLD_SCALE * (position.x + SPRITE_HWIDTH)
+        + p_random.randf_range(-32.0, 32.0);
+
+    true_position.y += WORLD_SCALE * (position.y + 1.1 * SPRITE_HEIGHT)
+        + p_random.randf_range(-8.0, 8.0);
+
+    Collectable *collectable = static_cast<Collectable *>(p_stick_template->instantiate());
+    add_child(collectable);
+
+    collectable->set_global_position(true_position);
+    collectable->connect(SIGNAL_ON_COLLECTED, Callable(this, "_on_item_collected"));
+
+    m_spawn_counter ++;
 }
 
 void TreeController::redraw()
@@ -230,7 +285,6 @@ void TreeController::set_shape(const Ref<Shape2D> shape)
     p_shape = shape;
 }
 
-
 Ref<Shape2D> TreeController::get_shape() const
 {
     return p_shape;
@@ -256,6 +310,16 @@ uint32_t TreeController::get_collision_mask() const
     return m_collision_mask;
 }
 
+void TreeController::set_stick_template(const Ref<PackedScene> &scene)
+{
+    p_stick_template = scene;
+}
+
+Ref<PackedScene> TreeController::get_stick_template()
+{
+    return p_stick_template;
+}
+
 Transform2D TreeController::transform_for_position(const Vector2 &position)
 {
     Transform2D transform;
@@ -263,6 +327,11 @@ Transform2D TreeController::transform_for_position(const Vector2 &position)
     transform.scale(Size2(2.0, 2.0));
 
     return transform;
+}
+
+void TreeController::on_spawn_item_collected()
+{
+    m_spawn_counter = MAX(0, m_spawn_counter - 1);
 }
 
 void TreeController::_bind_methods()
@@ -296,13 +365,20 @@ void TreeController::_bind_methods()
     ClassDB::bind_method(D_METHOD("set_collision_mask", "m_collision_mask"), &TreeController::set_collision_mask);
     ClassDB::bind_method(D_METHOD("get_collision_mask"), &TreeController::get_collision_mask);
 
+    ClassDB::bind_method(D_METHOD("set_template", "p_template"), &TreeController::set_stick_template);
+    ClassDB::bind_method(D_METHOD("get_template"), &TreeController::get_stick_template);
+
     ClassDB::add_property(class_name, PropertyInfo(Variant::Type::INT, "seed"), "set_seed", "get_seed");
     ClassDB::add_property(class_name, PropertyInfo(Variant::Type::FLOAT, "y_offset"), "set_y_offset", "get_y_offset");
     ClassDB::add_property(class_name, PropertyInfo(Variant::Type::OBJECT, "shape", PROPERTY_HINT_RESOURCE_TYPE, Shape2D::get_class_static()), "set_shape", "get_shape");
+    ClassDB::add_property(class_name, PropertyInfo(Variant::Type::OBJECT, "template", PROPERTY_HINT_RESOURCE_TYPE, PackedScene::get_class_static()), "set_template", "get_template");
     ClassDB::add_property(class_name, PropertyInfo(Variant::Type::OBJECT, "spritesheet", PROPERTY_HINT_RESOURCE_TYPE, Texture2D::get_class_static()), "set_spritesheet", "get_spritesheet");
     ClassDB::add_property(class_name, PropertyInfo(Variant::Type::OBJECT, "material", PROPERTY_HINT_RESOURCE_TYPE, ShaderMaterial::get_class_static()), "set_material", "get_material");
     ClassDB::add_property(class_name, PropertyInfo(Variant::Type::INT, "collision_layer", PROPERTY_HINT_LAYERS_2D_PHYSICS), "set_collision_layer", "get_collision_layer");
     ClassDB::add_property(class_name, PropertyInfo(Variant::Type::INT, "collision_mask", PROPERTY_HINT_LAYERS_2D_PHYSICS), "set_collision_mask", "get_collision_mask");
     ClassDB::add_property(class_name, PropertyInfo(Variant::Type::ARRAY, "positions", PROPERTY_HINT_ARRAY_TYPE, "Vector2"), "set_positions", "get_positions");
+
+    // Slots
+    ClassDB::bind_method(D_METHOD("_on_item_collected"), &TreeController::on_spawn_item_collected);
 }
 

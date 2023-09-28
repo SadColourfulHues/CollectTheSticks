@@ -1,7 +1,8 @@
 #ifndef _TREE_DATA_H_
 #define _TREE_DATA_H_
 
-#include <godot_cpp/classes/rendering_server.hpp>
+#include <godot_cpp/variant/rid.hpp>
+#include <godot_cpp/variant/vector2.hpp>
 
 namespace godot
 {
@@ -12,12 +13,12 @@ namespace godot
 
         Vector2 position;
 
-        tree_data_t()
+        tree_data_t(const RID &visual_rid, const Vector2 &position)
         {
-            visual_rid = RID();
-            body_rid = RID();
+            this->visual_rid = visual_rid;
+            this->position = position;
 
-            position = Vector2(0, 0);
+            body_rid = RID();
         }
     }
     TreeData;
