@@ -10,20 +10,20 @@ namespace godot
     {
         GDCLASS(GameState, Resource)
 
-        private:
-            uint32_t m_score;
+    public:
+        GameState();
+        ~GameState();
 
-        protected:
-            static void _bind_methods();
+        void add_score(const int amount);
 
-        public:
-            GameState();
-            ~GameState();
+        void set_score(const uint32_t amount);
+        uint32_t get_score() const;
 
-            void add_score(const int amount);
+    protected:
+        static void _bind_methods();
 
-            void set_score(const uint32_t amount);
-            uint32_t get_score() const;
+    private:
+        uint32_t m_score;
     };
 }
 

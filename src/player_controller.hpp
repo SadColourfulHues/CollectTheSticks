@@ -13,28 +13,28 @@ namespace godot
     {
         GDCLASS(PlayerController, CharacterBody2D)
 
-        private:
-            AnimatedSprite2D *p_sprite;
-            Area2D *p_detector;
+    public:
+        PlayerController();
+        ~PlayerController();
 
-            Vector2 m_smooth_motion;
-            double m_speed;
+        void _ready() override;
+        void _process(double) override;
+        void _physics_process(double) override;
 
-            void on_detector_entered(Node2D *other);
+        void set_speed(const double speed);
+        double get_speed() const;
 
-        protected:
-            static void _bind_methods();
+    protected:
+        static void _bind_methods();
 
-        public:
-            PlayerController();
-            ~PlayerController();
+    private:
+        AnimatedSprite2D *p_sprite;
+        Area2D *p_detector;
 
-            void _ready() override;
-            void _process(double) override;
-            void _physics_process(double) override;
+        Vector2 m_smooth_motion;
+        double m_speed;
 
-            void set_speed(const double speed);
-            double get_speed() const;
+        void on_detector_entered(Node2D *other);
     };
 }
 

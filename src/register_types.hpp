@@ -10,6 +10,7 @@
 #include "player_camera.hpp"
 #include "game_state.hpp"
 #include "collectable.hpp"
+#include "tree_controller.hpp"
 
 void initialise_module();
 void terminate_module();

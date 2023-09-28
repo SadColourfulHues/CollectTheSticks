@@ -12,7 +12,7 @@ void vertex()
 	vec2 vertex = VERTEX;
 
 	// Apply wave based on height (masking out the bottom bit)
-	vertex.x += 0.5 + 0.5 * sin(wx + wave_speed_mod * TIME * VERTEX.y) * wave_strength * (min(0.0, VERTEX.y * 0.6));
+	vertex.x += 0.5 + 0.5 * sin(wx + wave_speed_mod * TIME * VERTEX.y) * wave_strength * (min(0.0, VERTEX.y - (VERTEX.y * 0.9145)));
 	VERTEX = vertex;
 }
 

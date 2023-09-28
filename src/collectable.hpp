@@ -13,24 +13,24 @@ namespace godot
     {
         GDCLASS(Collectable, StaticBody2D)
 
-        private:
-            Ref<GameState> p_game_state;
-            uint32_t m_score_value;
+    public:
+        Collectable();
+        ~Collectable();
 
-        protected:
-            static void _bind_methods();
+        void collect();
 
-        public:
-            Collectable();
-            ~Collectable();
+        void set_game_state(const Ref<GameState> &state);
+        Ref<GameState> get_game_state() const;
 
-            void collect();
+        void set_score_value(const uint32_t value);
+        uint32_t get_score_value() const;
 
-            void set_game_state(const Ref<GameState> &state);
-            Ref<GameState> get_game_state() const;
+    protected:
+        static void _bind_methods();
 
-            void set_score_value(const uint32_t value);
-            uint32_t get_score_value() const;
+    private:
+        Ref<GameState> p_game_state;
+        uint32_t m_score_value;
     };
 }
 

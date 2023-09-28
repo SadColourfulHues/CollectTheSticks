@@ -10,31 +10,31 @@ namespace godot
     {
         GDCLASS(PlayerCamera, Camera2D)
 
-        private:
-            NodePath m_path_subject;
-            Node2D *p_subject;
+    public:
+        PlayerCamera();
+        ~PlayerCamera();
 
-            Vector2 m_offset;
-            double m_follow_fac;
+        void _ready() override;
+        void _physics_process(double delta) override;
 
-        protected:
-            static void _bind_methods();
+        void update_offset();
+        void update_position(double fac);
 
-        public:
-            PlayerCamera();
-            ~PlayerCamera();
+        void set_subject(const NodePath &path);
+        NodePath get_subject() const;
 
-            void _ready();
-            void _physics_process(double delta);
+        void set_follow_fac(const double fac);
+        double get_follow_fac() const;
 
-            void update_offset();
-            void update_position(double fac);
+    protected:
+        static void _bind_methods();
 
-            void set_subject(const NodePath &path);
-            NodePath get_subject() const;
+    private:
+        NodePath m_path_subject;
+        Node2D *p_subject;
 
-            void set_follow_fac(const double fac);
-            double get_follow_fac() const;
+        Vector2 m_offset;
+        double m_follow_fac;
     };
 }
 
