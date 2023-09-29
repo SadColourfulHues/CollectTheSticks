@@ -1,8 +1,10 @@
 #ifndef _COLLECTABLE_H_
 #define _COLLECTABLE_H_
 
+#include <godot_cpp/classes/audio_stream.hpp>
 #include <godot_cpp/classes/static_body2d.hpp>
 #include <godot_cpp/core/class_db.hpp>
+
 #include "game_state.hpp"
 
 #define TAG_COLLECTABLE "collectables"
@@ -28,8 +30,13 @@ namespace godot
         void set_score_value(const uint32_t value);
         uint32_t get_score_value() const;
 
+        void set_collect_sfx(const Ref<AudioStream> &sfx);
+        Ref<AudioStream> get_collect_sfx() const;
+
     protected:
         static void _bind_methods();
+
+        Ref<AudioStream> p_collect_sound_effect;
 
     private:
         Ref<GameState> p_game_state;

@@ -10,6 +10,7 @@
 #include "player_camera.hpp"
 #include "game_state.hpp"
 #include "collectable.hpp"
+#include "audio_controller.hpp"
 #include "tree_controller.hpp"
 
 #include "stick.hpp"

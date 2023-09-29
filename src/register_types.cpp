@@ -12,6 +12,7 @@ void initialise_module(ModuleInitializationLevel p_level)
     ClassDB::register_class<PlayerCamera>();
     ClassDB::register_class<Collectable>();
     ClassDB::register_class<GameState>();
+    ClassDB::register_class<AudioController>();
     ClassDB::register_class<TreeController>();
     ClassDB::register_class<Stick>();
 }

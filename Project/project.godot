@@ -15,6 +15,10 @@ run/main_scene="res://Scenes/SCNW_Main.tscn"
 config/features=PackedStringArray("4.1", "Mobile")
 config/icon="res://Assets/Icons/icon.svg"
 
+[audio]
+
+buses/default_bus_layout="res://Assets/System/AudioBusLayout.tres"
+
 [dotnet]
 
 project/assembly_name="SticksGodot"

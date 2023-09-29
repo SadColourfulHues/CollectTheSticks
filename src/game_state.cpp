@@ -5,6 +5,7 @@ using namespace godot;
 
 GameState::GameState()
 {
+    p_audio_controller = nullptr;
     m_score = 0;
 }
 
@@ -26,6 +27,22 @@ void GameState::set_score(const uint32_t score)
 uint32_t GameState::get_score() const
 {
     return m_score;
+}
+
+void GameState::audio_play(const Ref<AudioStream> &stream, const Vector2 &position, const float &volume, const float &max_distance, const StringName &bus)
+{
+    if (p_audio_controller == nullptr)
+        return;
+
+    p_audio_controller->play(stream, position, volume, max_distance, bus);
+}
+
+void GameState::audio_stop_all()
+{
+    if (p_audio_controller == nullptr)
+        return;
+
+    p_audio_controller->stop_all();
 }
 
 void GameState::_bind_methods()
