@@ -1,3 +1,4 @@
 **/*.vscode
+**/*.os
 *build.sh
 *kdev4

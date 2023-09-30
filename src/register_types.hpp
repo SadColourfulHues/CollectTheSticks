@@ -6,12 +6,15 @@
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/godot.hpp>
 
-#include "player_controller.hpp"
-#include "player_camera.hpp"
-#include "game_state.hpp"
-#include "collectable.hpp"
-#include "audio_controller.hpp"
-#include "tree_controller.hpp"
+#include "core/game_state.hpp"
+#include "core/audio_controller.hpp"
+
+#include "player/player_controller.hpp"
+#include "player/player_camera.hpp"
+
+#include "collectable/collectable.hpp"
+
+#include "tree/tree_controller.hpp"
 
 #include "stick.hpp"
 

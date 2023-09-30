@@ -235,7 +235,7 @@ position = Vector2(-6.048, 0)
 
 [node name="Camera" type="PlayerCamera" parent="World"]
 subject = NodePath("../Player")
-position = Vector2(-1.02966e-05, 4.48894e-11)
+position = Vector2(1.02966e-05, -4.48894e-11)
 scale = Vector2(0.125, 0.125)
 zoom = Vector2(0.8, 0.8)
 
