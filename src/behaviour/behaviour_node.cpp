@@ -1,6 +1,6 @@
 #include "behaviour_node.hpp"
 
-using namespace godot;
+using namespace behaviour;
 
 BehaviourNode::BehaviourNode()
 {

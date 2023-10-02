@@ -1,6 +1,6 @@
 #include "composite_node.hpp"
 
-using namespace godot;
+using namespace behaviour;
 
 CompositeNode::CompositeNode()
 {

@@ -13,10 +13,10 @@
 #include "player/player_camera.hpp"
 
 #include "collectable/collectable.hpp"
+#include "collectable/stick.hpp"
 
+#include "stick_eater/stick_eater.hpp"
 #include "tree/tree_controller.hpp"
-
-#include "stick.hpp"
 
 void initialise_module();
 void terminate_module();

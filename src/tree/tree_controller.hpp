@@ -23,7 +23,9 @@
 #define MAX_SPAWN_ATTEMPTS 5
 #define MAX_SPAWN_FAIL_CHANCE 0.25
 
-namespace godot
+using namespace godot;
+
+namespace game
 {
     class TreeController final : public Node2D
     {
@@ -66,10 +68,9 @@ namespace godot
         void set_stick_template(const Ref<PackedScene> &scene);
         Ref<PackedScene> get_stick_template();
 
-    protected:
+    private:
         static void _bind_methods();
 
-    private:
         void on_spawn_item_collected();
         static Transform2D transform_for_position(const Vector2 &position);
 

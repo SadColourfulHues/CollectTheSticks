@@ -6,9 +6,11 @@
 
 #include "collectable.hpp"
 
-namespace godot
+using namespace godot;
+
+namespace game
 {
-    class Stick : public Collectable
+    class Stick final : public Collectable
     {
         GDCLASS(Stick, Collectable)
 

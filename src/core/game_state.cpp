@@ -1,7 +1,6 @@
 #include "game_state.hpp"
 
-using namespace godot;
-
+using namespace game;
 
 GameState::GameState()
 {

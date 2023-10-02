@@ -1,6 +1,6 @@
 #include "stick.hpp"
 
-using namespace godot;
+using namespace game;
 
 Stick::Stick()
 {

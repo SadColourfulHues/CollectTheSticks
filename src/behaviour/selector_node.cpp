@@ -1,8 +1,8 @@
 #include "selector_node.hpp"
 
-using namespace godot;
+using namespace behaviour;
 
-BehaviourNodeResult SelectorNode::process(double delta)
+BehaviourNodeResult SelectorNode::process(double delta, Ref<BehaviourContext> context)
 {
     BehaviourNodeResult result;
 
@@ -11,7 +11,7 @@ BehaviourNodeResult SelectorNode::process(double delta)
         if (p_children[i].is_null())
             continue;
 
-        result = p_children[i]->process(delta);
+        result = p_children[i]->process(delta, context);
 
         if (result == PROCESS_FAIL)
             continue;

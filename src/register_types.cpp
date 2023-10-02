@@ -1,7 +1,7 @@
 #include "register_types.hpp"
 
 using namespace godot;
-
+using namespace game;
 
 void initialise_module(ModuleInitializationLevel p_level)
 {
@@ -14,6 +14,7 @@ void initialise_module(ModuleInitializationLevel p_level)
     ClassDB::register_class<GameState>();
     ClassDB::register_class<AudioController>();
     ClassDB::register_class<TreeController>();
+    ClassDB::register_class<StickEater>();
     ClassDB::register_class<Stick>();
 }
 

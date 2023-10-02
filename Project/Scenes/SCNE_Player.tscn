@@ -1,0 +1,99 @@
+[gd_scene load_steps=12 format=3 uid="uid://cj143c3ebm617"]
+
+[ext_resource type="Texture2D" uid="uid://udo5hks2w1e3" path="res://Assets/Sprites/sticks_player.png" id="1_gjh2t"]
+[ext_resource type="Texture2D" uid="uid://cg7ct5gctv036" path="res://Assets/Sprites/sticks_shadow.png" id="2_q1jlw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ojbpx"]
+atlas = ExtResource("1_gjh2t")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ngi8m"]
+atlas = ExtResource("1_gjh2t")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_44u3o"]
+atlas = ExtResource("1_gjh2t")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d6vhf"]
+atlas = ExtResource("1_gjh2t")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_11boh"]
+atlas = ExtResource("1_gjh2t")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2fjai"]
+atlas = ExtResource("1_gjh2t")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_p426x"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ojbpx")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ngi8m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_44u3o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d6vhf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_11boh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2fjai")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 9.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l148u"]
+size = Vector2(7.2, 9)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_liy1s"]
+radius = 48.0
+
+[node name="Player" type="PlayerController"]
+speed = 450.0
+texture_filter = 1
+scale = Vector2(0.625, 0.625)
+collision_layer = 2
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+sprite_frames = SubResource("SpriteFrames_p426x")
+animation = &"idle"
+frame_progress = 0.562279
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1.7)
+shape = SubResource("RectangleShape2D_l148u")
+debug_color = Color(1, 0.607843, 0.172549, 0.419608)
+
+[node name="Shadow" type="Sprite2D" parent="."]
+show_behind_parent = true
+position = Vector2(0, 4.392)
+scale = Vector2(0.704, 0.704)
+texture = ExtResource("2_q1jlw")
+
+[node name="Detector" type="Area2D" parent="."]
+unique_name_in_owner = true
+scale = Vector2(0.2, 0.2)
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detector"]
+position = Vector2(0, 8)
+shape = SubResource("CircleShape2D_liy1s")
+debug_color = Color(0, 0.701961, 0, 0.419608)

@@ -7,7 +7,9 @@
 #include <godot_cpp/classes/input.hpp>
 #include <godot_cpp/classes/engine.hpp>
 
-namespace godot
+using namespace godot;
+
+namespace game
 {
     class PlayerController final : public CharacterBody2D
     {
@@ -24,17 +26,15 @@ namespace godot
         void set_speed(const double speed);
         double get_speed() const;
 
-    protected:
-        static void _bind_methods();
-
     private:
+        static void _bind_methods();
+        void on_detector_entered(Node2D *other);
+
         AnimatedSprite2D *p_sprite;
         Area2D *p_detector;
 
         Vector2 m_smooth_motion;
         double m_speed;
-
-        void on_detector_entered(Node2D *other);
     };
 }
 

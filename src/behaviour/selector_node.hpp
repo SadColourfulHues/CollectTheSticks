@@ -3,12 +3,14 @@
 
 #include "composite_node.hpp"
 
-namespace godot
+using namespace godot;
+
+namespace behaviour
 {
     class SelectorNode : public CompositeNode
     {
     public:
-        BehaviourNodeResult process(double delta) override;
+        BehaviourNodeResult process(double delta, Ref<BehaviourContext> context) override;
     };
 };
 

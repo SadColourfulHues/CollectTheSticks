@@ -4,7 +4,9 @@
 #include <godot_cpp/classes/camera2d.hpp>
 #include <godot_cpp/core/class_db.hpp>
 
-namespace godot
+using namespace godot;
+
+namespace game
 {
     class PlayerCamera final : public Camera2D
     {
@@ -26,10 +28,9 @@ namespace godot
         void set_follow_fac(const double fac);
         double get_follow_fac() const;
 
-    protected:
+    private:
         static void _bind_methods();
 
-    private:
         NodePath m_path_subject;
         Node2D *p_subject;
 

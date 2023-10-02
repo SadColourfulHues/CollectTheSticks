@@ -1,8 +1,8 @@
 #include "sequence_node.hpp"
 
-using namespace godot;
+using namespace behaviour;
 
-BehaviourNodeResult SequenceNode::process(double delta)
+BehaviourNodeResult SequenceNode::process(double delta, Ref<BehaviourContext> context)
 {
     BehaviourNodeResult result;
 
@@ -11,7 +11,7 @@ BehaviourNodeResult SequenceNode::process(double delta)
         if (p_children[i].is_null())
             continue;
 
-        result = p_children[i]->process(delta);
+        result = p_children[i]->process(delta, context);
 
         if (result == PROCESS_SUCCESS)
             continue;

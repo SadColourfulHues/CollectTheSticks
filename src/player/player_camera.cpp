@@ -1,7 +1,6 @@
 #include "player_camera.hpp"
 
-using namespace godot;
-
+using namespace game;
 
 PlayerCamera::PlayerCamera()
 {

@@ -10,7 +10,9 @@
 #define TAG_COLLECTABLE "collectables"
 #define SIGNAL_ON_COLLECTED "on_collected"
 
-namespace godot
+using namespace godot;
+
+namespace game
 {
     class Collectable : public StaticBody2D
     {

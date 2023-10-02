@@ -18,7 +18,9 @@
 #define BUS_SFX "SFX"
 #define BUS_BGM "BGM"
 
-namespace godot
+using namespace godot;
+
+namespace game
 {
     class AudioController : public Node2D
     {
@@ -36,13 +38,11 @@ namespace godot
         void set_game_state(const Ref<Resource> &game_state);
         Ref<Resource> get_game_state() const;
 
-    protected:
-        static void _bind_methods();
-
     private:
-        Ref<Resource> p_game_state;
+        static void _bind_methods();
         void pool_get_player(AudioStreamPlayer2D **player_ref);
 
+        Ref<Resource> p_game_state;
         AudioStreamPlayer2D *p_players[MAX_AUDIO_PLAYBACK];
     };
 };

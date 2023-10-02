@@ -4,6 +4,7 @@ uniform lowp float wave_strength : hint_range(0.0, 1.0) = 0.02;
 uniform lowp float wave_speed_mod: hint_range(0.1, 2.0) = 0.35;
 uniform lowp float wave_world_x_influence = 21.0;
 uniform lowp float darken_effect_mix: hint_range(0.0, 1.0) = 0.75;
+uniform lowp float pixel_snap = 0.5f;
 
 void vertex()
 {
@@ -12,7 +13,11 @@ void vertex()
 	vec2 vertex = VERTEX;
 
 	// Apply wave based on height (masking out the bottom bit)
-	vertex.x += 0.5 + 0.5 * sin(wx + wave_speed_mod * TIME * VERTEX.y) * wave_strength * (min(0.0, VERTEX.y - (VERTEX.y * 0.9145)));
+	float displace = 0.5 + 0.5 * sin(wx + wave_speed_mod * TIME * VERTEX.y) * wave_strength * (min(0.0, VERTEX.y - (VERTEX.y * 0.9145)));
+
+	displace = round(displace / pixel_snap) * pixel_snap;
+
+	vertex.x += displace;
 	VERTEX = vertex;
 }
 

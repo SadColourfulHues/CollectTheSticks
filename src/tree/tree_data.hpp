@@ -4,7 +4,9 @@
 #include <godot_cpp/variant/rid.hpp>
 #include <godot_cpp/variant/vector2.hpp>
 
-namespace godot
+using namespace godot;
+
+namespace game
 {
     typedef struct tree_data_t
     {

@@ -2,8 +2,11 @@
 #define _BEHAVIOUR_NODE_H_
 
 #include <godot_cpp/classes/ref_counted.hpp>
+#include "behaviour_context.hpp"
 
-namespace godot
+using namespace godot;
+
+namespace behaviour
 {
     enum BehaviourNodeResult
     {
@@ -16,7 +19,7 @@ namespace godot
     {
     public:
         virtual ~BehaviourNode();
-        virtual BehaviourNodeResult process(double delta) = 0;
+        virtual BehaviourNodeResult process(double delta, Ref<BehaviourContext> context) = 0;
 
     protected:
         BehaviourNode();

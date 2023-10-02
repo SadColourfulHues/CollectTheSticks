@@ -1,7 +1,6 @@
 #include "collectable.hpp"
 
-using namespace godot;
-
+using namespace game;
 
 Collectable::Collectable()
 {

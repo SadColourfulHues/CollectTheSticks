@@ -7,7 +7,9 @@
 
 #define MAX_COMPOSITE_NODE_CHILDREN 16
 
-namespace godot
+using namespace godot;
+
+namespace behaviour
 {
     class CompositeNode : public BehaviourNode
     {

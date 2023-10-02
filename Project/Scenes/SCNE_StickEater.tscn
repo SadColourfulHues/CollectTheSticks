@@ -1,0 +1,104 @@
+[gd_scene load_steps=13 format=3 uid="uid://b778hb2slr0mp"]
+
+[ext_resource type="GameState" uid="uid://cvu5ifs1dere3" path="res://Assets/Resources/SharedGameState.tres" id="1_nax0n"]
+[ext_resource type="Texture2D" uid="uid://bwt4h2fjwnpyv" path="res://Assets/Sprites/stick_eater.png" id="2_c8c4l"]
+[ext_resource type="Texture2D" uid="uid://cg7ct5gctv036" path="res://Assets/Sprites/sticks_shadow.png" id="3_nngqo"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_d5x8c"]
+radius = 45.5412
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_no1ot"]
+radius = 8.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xx2b1"]
+radius = 5.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r4men"]
+atlas = ExtResource("2_c8c4l")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gvshq"]
+atlas = ExtResource("2_c8c4l")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ah1qe"]
+atlas = ExtResource("2_c8c4l")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_deldh"]
+atlas = ExtResource("2_c8c4l")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_amc4o"]
+atlas = ExtResource("2_c8c4l")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_t8gy6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r4men")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 0.8,
+"texture": SubResource("AtlasTexture_gvshq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ah1qe")
+}, {
+"duration": 0.75,
+"texture": SubResource("AtlasTexture_deldh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_amc4o")
+}],
+"loop": true,
+"name": &"move",
+"speed": 8.0
+}]
+
+[node name="StickEater" type="StickEater"]
+game_state = ExtResource("1_nax0n")
+sprite = NodePath("AnimatedSprite2D")
+detector = NodePath("Detector")
+destroyer = NodePath("StickDestroyer")
+collision_layer = 2
+collision_mask = 3
+
+[node name="Detector" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 13
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detector"]
+shape = SubResource("CircleShape2D_d5x8c")
+debug_color = Color(0.701961, 0.67451, 0, 0.419608)
+
+[node name="StickDestroyer" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StickDestroyer"]
+shape = SubResource("CircleShape2D_no1ot")
+debug_color = Color(1, 0, 0.180392, 0.419608)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_xx2b1")
+debug_color = Color(1, 0.729412, 0.290196, 0.419608)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 3
+position = Vector2(0, -2)
+scale = Vector2(0.65, 0.65)
+sprite_frames = SubResource("SpriteFrames_t8gy6")
+animation = &"idle"
+
+[node name="Shadow" type="Sprite2D" parent="."]
+show_behind_parent = true
+texture_filter = 3
+position = Vector2(0, -1)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("3_nngqo")

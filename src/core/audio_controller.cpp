@@ -1,7 +1,7 @@
 #include "audio_controller.hpp"
 #include "game_state.hpp"
 
-using namespace godot;
+using namespace game;
 
 AudioController::AudioController()
 {

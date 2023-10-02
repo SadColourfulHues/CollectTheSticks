@@ -1,8 +1,7 @@
 #include "player_controller.hpp"
 #include "collectable/collectable.hpp"
 
-using namespace godot;
-
+using namespace game;
 
 PlayerController::PlayerController()
 {

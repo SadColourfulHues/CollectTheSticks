@@ -7,7 +7,9 @@
 
 #include "audio_controller.hpp"
 
-namespace godot
+using namespace godot;
+
+namespace game
 {
     class GameState final : public Resource
     {
@@ -25,10 +27,9 @@ namespace godot
         void set_score(const uint32_t amount);
         uint32_t get_score() const;
 
-    protected:
+    private:
         static void _bind_methods();
 
-    private:
         friend class AudioController;
         AudioController *p_audio_controller;
 
