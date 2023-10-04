@@ -4,8 +4,6 @@
 #include "behaviour/behaviour_node.hpp"
 #include "core/maths_utils.hpp"
 
-#define MOVE_AVOID_OBSTACLE_DISTANCE 90.0
-
 using namespace godot;
 using namespace behaviour;
 

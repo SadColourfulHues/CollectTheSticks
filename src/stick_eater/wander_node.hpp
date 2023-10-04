@@ -4,9 +4,10 @@
 #include <godot_cpp/classes/random_number_generator.hpp>
 #include "behaviour/behaviour_node.hpp"
 
-#define WANDER_AVOID_OBSTACLE_DISTANCE 150.0
+#define WANDER_AVOID_OBSTACLE_DISTANCE 350.0
 
 #define KEY_WANDER_DIR "wdir"
+#define KEY_WANDER_TARGET_DIR "tdir"
 #define KEY_WANDER_LAST_POSITION "wlp"
 
 using namespace behaviour;
@@ -23,6 +24,7 @@ namespace game
         BehaviourNodeResult process(double delta, Ref<BehaviourContext> context) override;
 
     private:
+        float m_update_wander_tick;
         RandomNumberGenerator p_random;
     };
 };

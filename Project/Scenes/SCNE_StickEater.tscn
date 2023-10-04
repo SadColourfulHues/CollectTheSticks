@@ -1,17 +1,21 @@
-[gd_scene load_steps=13 format=3 uid="uid://b778hb2slr0mp"]
+[gd_scene load_steps=14 format=3 uid="uid://b778hb2slr0mp"]
 
 [ext_resource type="GameState" uid="uid://cvu5ifs1dere3" path="res://Assets/Resources/SharedGameState.tres" id="1_nax0n"]
 [ext_resource type="Texture2D" uid="uid://bwt4h2fjwnpyv" path="res://Assets/Sprites/stick_eater.png" id="2_c8c4l"]
 [ext_resource type="Texture2D" uid="uid://cg7ct5gctv036" path="res://Assets/Sprites/sticks_shadow.png" id="3_nngqo"]
 
+[sub_resource type="Curve" id="Curve_cfvui"]
+_data = [Vector2(0, 0.7), 0.0, 0.0, 0, 0, Vector2(0.326316, 1), 0.0, 0.0, 0, 0, Vector2(0.658, 0.5), -0.335859, -0.335859, 0, 0, Vector2(1, 0.7), 0.0, 0.0, 0, 0]
+point_count = 4
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_d5x8c"]
-radius = 45.5412
+radius = 137.131
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_no1ot"]
 radius = 8.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xx2b1"]
-radius = 5.0
+radius = 3.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r4men"]
 atlas = ExtResource("2_c8c4l")
@@ -62,12 +66,16 @@ animations = [{
 }]
 
 [node name="StickEater" type="StickEater"]
+speed = 250.0
 game_state = ExtResource("1_nax0n")
+speed_curve = SubResource("Curve_cfvui")
 sprite = NodePath("AnimatedSprite2D")
 detector = NodePath("Detector")
 destroyer = NodePath("StickDestroyer")
 collision_layer = 2
 collision_mask = 3
+platform_on_leave = 2
+platform_floor_layers = 4294934527
 
 [node name="Detector" type="Area2D" parent="."]
 collision_layer = 0

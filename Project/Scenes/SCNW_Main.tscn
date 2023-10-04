@@ -168,14 +168,14 @@ template = ExtResource("2_cim5x")
 spritesheet = ExtResource("2_ogvfs")
 material = SubResource("ShaderMaterial_dt11y")
 collision_layer = 469696520
-collision_mask = 2
+collision_mask = 0
 positions = PackedVector2Array(0, -17.184, -26.56, 0, 17.376, 13.088, 6.08, 39.744, -54.176, 7.136, -51.584, -13.984, 38.528, -14.048, -22.272, 58.304, -52.832, 36.32, 36.256, 45.376, 38.752, 28.224, -18.048, -41.184, 7.488, -56.864, -60.288, -44.576, 36.448, -52.288, -31.328, -56.128, -58.304, 54.976, 48.768, -36.256, -22.624, 32.64)
 material = SubResource("ShaderMaterial_dt11y")
 position = Vector2(-6.048, 0)
 
 [node name="Camera" type="PlayerCamera" parent="World"]
 subject = NodePath("../Player")
-position = Vector2(1.02966e-05, -4.48891e-11)
+position = Vector2(1.01043e-05, -4.40506e-11)
 scale = Vector2(0.125, 0.125)
 zoom = Vector2(0.8, 0.8)
 

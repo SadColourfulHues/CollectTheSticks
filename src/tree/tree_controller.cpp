@@ -151,7 +151,7 @@ void TreeController::configure_physics()
         offset = transform.get_origin();
 
         offset.x = global_position.x + WORLD_SCALE * (offset.x + SPRITE_WIDTH);
-        offset.y = global_position.y + WORLD_SCALE * (offset.y - 10.8 + SPRITE_HEIGHT + m_y_offset);
+        offset.y = global_position.y + WORLD_SCALE * (offset.y - 8.0 + SPRITE_HEIGHT + m_y_offset);
 
         transform.set_origin(offset);
         p_data[i].body_rid = physics_server->body_create();
@@ -177,10 +177,10 @@ void TreeController::spawn_stick(const Vector2 &position)
     Vector2 true_position = get_global_position();
 
     true_position.x += WORLD_SCALE * (position.x + SPRITE_HWIDTH)
-        + p_random.randf_range(-32.0, 32.0);
+        + p_random.randf_range(16.0, 24.0) * (p_random.randf() < 0.5 ? -1.0 : 1.0);
 
     true_position.y += WORLD_SCALE * (position.y + 1.1 * SPRITE_HEIGHT)
-        + p_random.randf_range(-8.0, 8.0);
+        + p_random.randf_range(20.0, 32.0);
 
     Collectable *collectable = static_cast<Collectable *>(p_stick_template->instantiate());
     add_child(collectable);

@@ -8,6 +8,7 @@
 #include <godot_cpp/classes/animated_sprite2d.hpp>
 #include <godot_cpp/classes/audio_stream.hpp>
 #include <godot_cpp/classes/engine.hpp>
+#include <godot_cpp/classes/curve.hpp>
 #include <godot_cpp/core/class_db.hpp>
 
 #include "behaviour/sequence_node.hpp"
@@ -49,6 +50,9 @@ namespace game
         void set_game_state(const Ref<GameState> &game_state);
         Ref<GameState> get_game_state() const;
 
+        void set_speed_curve(const Ref<Curve> &curve);
+        Ref<Curve> get_speed_curve() const;
+
         void set_sprite(const NodePath &path);
         NodePath get_sprite() const;
 
@@ -77,11 +81,14 @@ namespace game
         NodePath p_path_destroyer;
 
         Ref<GameState> p_game_state;
+        Ref<Curve> p_speed_curve;
 
         Area2D *p_detector;
         AnimatedSprite2D *p_sprite;
 
         Vector2 m_velocity;
+
+        double m_speed_curve_time;
         double m_speed;
     };
 };

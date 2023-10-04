@@ -4,7 +4,7 @@ using namespace game;
 
 StickEater::StickEater()
 {
-    m_velocity.x = 0;
+    m_velocity.x = 1.0f;
     m_velocity.y = 0;
 
     m_speed = 80.0;
@@ -38,7 +38,7 @@ void StickEater::_ready()
 
     if (p_behaviour == nullptr)
     {
-        WARN_PRINT("StickEater: stick <detector> is not assigned!");
+        WARN_PRINT("StickEater: <detector> is not assigned!");
     }
 
     if (p_detector == nullptr)
@@ -68,7 +68,9 @@ void StickEater::_physics_process(double delta)
     next_velocity = next_velocity.lerp(context->read_vector(KEY_NEXT_VELOCITY), 0.2f);
 
     m_velocity = next_velocity;
-    set_velocity(m_speed * next_velocity);
+    m_speed_curve_time = fmod(m_speed_curve_time + (2.0 * delta), 1.0);
+
+    set_velocity(m_speed_curve_time * m_speed * next_velocity);
     move_and_slide();
 
     context->write(KEY_ENTITY_POSITION, current_position);
@@ -160,6 +162,16 @@ Ref<GameState> StickEater::get_game_state() const
     return p_game_state;
 }
 
+void StickEater::set_speed_curve(const Ref<Curve> &curve)
+{
+    p_speed_curve = curve;
+}
+
+Ref<Curve> StickEater::get_speed_curve() const
+{
+    return p_speed_curve;
+}
+
 void StickEater::set_sprite(const NodePath &path)
 {
     p_path_sprite = path;
@@ -237,6 +249,9 @@ void StickEater::_bind_methods()
     ClassDB::bind_method(D_METHOD("set_game_state", "game_state"), &StickEater::set_game_state);
     ClassDB::bind_method(D_METHOD("get_game_state"), &StickEater::get_game_state);
 
+    ClassDB::bind_method(D_METHOD("set_speed_curve", "curve"), &StickEater::set_speed_curve);
+    ClassDB::bind_method(D_METHOD("get_speed_curve"), &StickEater::get_speed_curve);
+
     ClassDB::bind_method(D_METHOD("set_sprite", "path"), &StickEater::set_sprite);
     ClassDB::bind_method(D_METHOD("get_sprite"), &StickEater::get_sprite);
 
@@ -248,6 +263,7 @@ void StickEater::_bind_methods()
 
     ClassDB::add_property(class_name, PropertyInfo(Variant::Type::FLOAT, "speed"), "set_speed", "get_speed");
     ClassDB::add_property(class_name, PropertyInfo(Variant::Type::OBJECT, "game_state", PROPERTY_HINT_RESOURCE_TYPE, GameState::get_class_static()), "set_game_state", "get_game_state");
+    ClassDB::add_property(class_name, PropertyInfo(Variant::Type::OBJECT, "speed_curve", PROPERTY_HINT_RESOURCE_TYPE, Curve::get_class_static()), "set_speed_curve", "get_speed_curve");
     ClassDB::add_property(class_name, PropertyInfo(Variant::Type::NODE_PATH, "sprite", PROPERTY_HINT_NODE_PATH_VALID_TYPES, AnimatedSprite2D::get_class_static()), "set_sprite", "get_sprite");
     ClassDB::add_property(class_name, PropertyInfo(Variant::Type::NODE_PATH, "detector", PROPERTY_HINT_NODE_PATH_VALID_TYPES, Area2D::get_class_static()), "set_detector", "get_detector");
     ClassDB::add_property(class_name, PropertyInfo(Variant::Type::NODE_PATH, "destroyer", PROPERTY_HINT_NODE_PATH_VALID_TYPES, Area2D::get_class_static()), "set_destroyer", "get_destroyer");
